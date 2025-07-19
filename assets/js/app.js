@@ -34,9 +34,12 @@ function render() {
       card.className = "course";
       card.textContent = course.name;
 
-      if (approved.includes(course.id)) {
+      const isApproved = approved.includes(course.id);
+      const unlocked = isUnlocked(course);
+
+      if (isApproved) {
         card.classList.add("approved");
-      } else if (isUnlocked(course)) {
+      } else if (unlocked) {
         card.classList.add("unlocked");
         card.onclick = () => {
           approved.push(course.id);
