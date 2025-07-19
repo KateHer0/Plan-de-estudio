@@ -1,5 +1,5 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Georgia', serif;
   background: linear-gradient(to bottom right, #e0f7fa, #e8f5e9);
   margin: 0;
   padding: 2rem;
@@ -7,40 +7,50 @@ body {
 }
 
 h1 {
+  font-family: 'Georgia', cursive;
   color: #00796B;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-style: italic;
 }
 
 #container {
   display: flex;
-  flex-direction: column;
-  gap: 40px;
-  max-width: 1200px;
-  margin: auto;
+  overflow-x: auto;
+  gap: 30px;
+  padding: 1rem;
 }
 
 .semester {
-  border-top: 2px solid #81D4FA;
-  padding-top: 10px;
+  min-width: 250px;
+  background-color: #ffffffbb;
+  border-radius: 10px;
+  padding: 15px;
+  border: 2px solid #81D4FA;
 }
 
 .semester h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #388E3C;
+  font-style: italic;
+  margin-bottom: 15px;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .course {
   background-color: #B2EBF2;
   border: 2px solid #81D4FA;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px;
   cursor: pointer;
+  font-style: italic;
+  font-size: 0.9rem;
   opacity: 0.5;
   transition: transform 0.2s, background-color 0.3s;
 }
