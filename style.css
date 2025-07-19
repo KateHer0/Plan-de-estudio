@@ -7,11 +7,11 @@ body {
 }
 
 h1 {
-  font-family: 'Georgia', cursive;
-  color: #00796B;
   font-size: 2.5rem;
-  margin-bottom: 2rem;
   font-style: italic;
+  color: #00796B;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px #ccc;
 }
 
 #container {
@@ -22,37 +22,42 @@ h1 {
 }
 
 .semester {
-  min-width: 250px;
-  background-color: #ffffffbb;
+  min-width: 270px;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 15px;
   border: 2px solid #81D4FA;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
 }
 
 .semester h2 {
   font-size: 1.2rem;
-  font-weight: bold;
-  color: #388E3C;
   font-style: italic;
+  color: #388E3C;
   margin-bottom: 15px;
 }
 
 .grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .course {
   background-color: #B2EBF2;
   border: 2px solid #81D4FA;
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 12px;
   cursor: pointer;
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   opacity: 0.5;
-  transition: transform 0.2s, background-color 0.3s;
+  transition: transform 0.2s ease, background-color 0.4s ease;
+  position: relative;
+}
+
+.course:hover {
+  transform: scale(1.05);
 }
 
 .course.unlocked {
@@ -65,8 +70,32 @@ h1 {
   color: white;
   font-weight: bold;
   opacity: 1;
+  animation: shine 0.6s ease-out;
 }
 
-.course:hover {
-  transform: scale(1.05);
+@keyframes shine {
+  0% { box-shadow: 0 0 0px rgba(0,255,200,0.4); }
+  50% { box-shadow: 0 0 10px rgba(0,255,200,0.7); }
+  100% { box-shadow: 0 0 0px rgba(0,255,200,0.4); }
 }
+
+.note {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
+}
+
+.edit-note {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background-color: #fff;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #00796B;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
