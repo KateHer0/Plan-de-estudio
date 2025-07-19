@@ -1,3 +1,6 @@
+const approved = JSON.parse(localStorage.getItem("approved") || "[]");
+const notes = JSON.parse(localStorage.getItem("notes") || "{}");
+
 const structure = [
   {
     semester: "Semestre I",
@@ -51,8 +54,8 @@ const structure = [
     courses: [
       { id: "cat_ctx", name: "Cátedra de Contexto", prerequisites: [] },
       { id: "org1", name: "Química Orgánica I", prerequisites: ["quim_inor2"] },
-      { id: "termo2", name: "Fisicoquímica II", prerequisites: ["termo1"] },
-      { id: "met_inv", name: "Metodología de Investigación", prerequisites: [] },
+      { id: "termo2", name: "Fisicoquímica II: Espontaneidad y Equilibrio", prerequisites: ["termo1"] },
+      { id: "met_inv", name: "Metodología de Investigación Cualitativa/Cuantitativa", prerequisites: [] },
       { id: "ppdiv", name: "PPDIV – Investigación Educativa", prerequisites: ["ppdiii"] },
       { id: "inv_aula", name: "Investigación Educativa y en el Aula", prerequisites: ["metodologias"] }
     ]
@@ -65,7 +68,7 @@ const structure = [
       { id: "instrum", name: "Análisis Químico Instrumental", prerequisites: ["analitica", "org1"] },
       { id: "ppdv", name: "PPDV – Lineamientos Curriculares", prerequisites: ["ppdiv"] },
       { id: "curricular", name: "Modelos Curriculares y Diseño Curricular", prerequisites: ["inv_aula"] },
-      { id: "lineas", name: "Líneas de Investigación Didáctica", prerequisites: [] }
+      { id: "lineas", name: "Líneas de Investigación en Didáctica de las Ciencias", prerequisites: [] }
     ]
   },
   {
@@ -75,7 +78,7 @@ const structure = [
       { id: "bioq", name: "Bioquímica", prerequisites: ["org2", "instrum"] },
       { id: "amb_sust", name: "Química Ambiental y Sostenible", prerequisites: [] },
       { id: "practica", name: "Práctica Social", prerequisites: [] },
-      { id: "ppvi", name: "PPVI – Gestión Evaluación Educativa", prerequisites: ["ppdv"] },
+      { id: "ppvi", name: "PPVI – Gestión de la Evaluación Educativa", prerequisites: ["ppdv"] },
       { id: "eval", name: "Evaluación de Aprendizaje", prerequisites: ["lineas"] }
     ]
   },
@@ -85,40 +88,48 @@ const structure = [
       { id: "demo", name: "Cátedra Democracia y Ciudadanía", prerequisites: [] },
       { id: "trab1", name: "Trabajo de Grado I", prerequisites: [] },
       { id: "ppd_escuela", name: "PPD – Inmersión en la Escuela", prerequisites: [] },
-      { id: "tic", name: "TIC en la Enseñanza de las Ciencias", prerequisites: [] }
+      { id: "tic", name: "TIC en las Enseñanza de las Ciencias Experimentales", prerequisites: [] }
     ]
   },
   {
     semester: "Semestre IX",
     courses: [
       { id: "trab2", name: "Trabajo de Grado II", prerequisites: ["trab1", "bioq", "ppvi", "eval", "amb_sust", "practica", "nees"] },
-      { id: "ppd_invest", name: "PPD – Inmersión en la Investigación", prerequisites: ["ppd_escuela"] }
+      { id: "ppd_invest", name: "PPD – Inmersión en la Investigación en la Escuela", prerequisites: ["ppd_escuela"] }
     ]
   }
 ];
-
-const approved = JSON.parse(localStorage.getItem("approved") || "[]");
 
 function isUnlocked(course) {
   return course.prerequisites.every(pr => approved.includes(pr));
 }
 
+function editNote(courseId) {
+  const currentNote = notes[courseId] || "";
+  const updated = prompt("Escribe tu nota personal:", currentNote);
+  if (updated !== null) {
+    notes[courseId] = updated;
+    localStorage.setItem("notes", JSON.stringify(notes));
+    render();
+  }
+}
+
 function render() {
-  const container = document.getElementById('container');
+  const container = document.getElementById("container");
   container.innerHTML = "";
 
   structure.forEach(sem => {
-    const section = document.createElement('div');
+    const section = document.createElement("div");
     section.className = "semester";
 
-    const title = document.createElement('h2');
+    const title = document.createElement("h2");
     title.textContent = sem.semester;
 
-    const grid = document.createElement('div');
+    const grid = document.createElement("div");
     grid.className = "grid";
 
     sem.courses.forEach(course => {
-      const card = document.createElement('div');
+      const card = document.createElement("div");
       card.className = "course";
       card.textContent = course.name;
 
@@ -133,13 +144,17 @@ function render() {
         };
       }
 
-      grid.appendChild(card);
-    });
+      const editBtn = document.createElement("button");
+      editBtn.className = "edit-note";
+      editBtn.textContent = "📝";
+      editBtn.onclick = (e) => {
+        e.stopPropagation();
+        editNote(course.id);
+      };
+      card.appendChild(editBtn);
 
-    section.appendChild(title);
-    section.appendChild(grid);
-    container.appendChild(section);
-  });
-}
-
-render();
+      if (notes[course.id]) {
+        const noteEl = document.createElement("div");
+        noteEl.className = "note";
+        noteEl.textContent = `Nota: ${notes[course.id]}`;
+        card.appendChild(note
